@@ -22,5 +22,21 @@ namespace TasksManagementMVCApp.Controllers
         {
             return PartialView();
         }
+
+        [HttpPost]
+        public ActionResult Suggestion(string suggestion)
+        {
+            if (!string.IsNullOrWhiteSpace(suggestion))
+            {
+                TempData["Status"] = "Your message has been submitted";
+            }
+            else
+            {
+                TempData["Status"] = "Your message has not been submitted";
+            }
+            return RedirectToAction("index");
+
+        }
+    
     }
 }
