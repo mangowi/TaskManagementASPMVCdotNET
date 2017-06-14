@@ -1,0 +1,1 @@
+D:\documents\Code\ASPdotNET\Git\TasksManagementMVCApp\TasksManagementMVCApp\obj\Debug\TasksManagementMVCApp.csprojResolveAssemblyReference.cache
