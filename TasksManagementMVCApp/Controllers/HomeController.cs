@@ -49,17 +49,11 @@ namespace TasksManagementMVCApp.Controllers
         [HttpPost]
         public ActionResult Suggestion(string suggestion)
         {
-            if (!string.IsNullOrWhiteSpace(suggestion))
-            {
-                TempData["Status"] = "Your message has been submitted";
-            }
-            else
-            {
-                TempData["Status"] = "Your message has not been submitted";
-            }
-            return RedirectToAction("index");
+            //Send email, return true or false for success
+            var emailSent = true;
 
+            return PartialView("SuggestionResult", emailSent);
         }
-    
+
     }
 }
