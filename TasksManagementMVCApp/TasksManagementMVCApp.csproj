@@ -299,8 +299,9 @@
     <Content Include="Views\Shared\Nav.cshtml" />
     <Content Include="Views\Shared\Suggestion.cshtml" />
     <Content Include="Views\Shared\Survey.cshtml" />
-    <Content Include="Views\Shared\_Layout - Copy.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\SurveyResults.cshtml" />
+    <Content Include="Views\Shared\SuggestionResults.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

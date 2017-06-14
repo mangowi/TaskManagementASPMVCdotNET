@@ -38,7 +38,7 @@ namespace TasksManagementMVCApp.Controllers
             var admins = context.Admins.OrderByDescending(x => x.Votes.Count).ToList();
 
             Session["HasVoted"] = true;
-            return PartialView("SurveyResults", admins);
+            return PartialView("SurveyResults", admins); //This has been passed
         }
 
         public ActionResult Suggestion()
