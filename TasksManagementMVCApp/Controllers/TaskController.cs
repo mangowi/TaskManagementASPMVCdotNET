@@ -12,7 +12,9 @@ namespace TasksManagementMVCApp.Controllers
         // GET: Task
         public ActionResult ViewAll()
         {
-            return View();
+            var context = new FeedbackContext();
+            var tasks = context.Tasks.OrderByDescending(x => x.Created).ToList();
+            return View(tasks);
         }
         public ActionResult CreateEdit(int Id = 0)
         {
