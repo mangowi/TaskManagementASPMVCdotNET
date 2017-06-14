@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -24,7 +25,11 @@ namespace TasksManagementMVCApp.Controllers
 
             if (Id != 0)
             {
-                return View(context.Tasks.FirstOrDefault(x => x.Id == Id));
+                var task = context.Tasks.FirstOrDefault(x => x.Id == Id);
+                var mappedTask = Mapper.Map<TaskVM>(task);
+                mappedTask.AssociatedMessageDisplay = task.AssociatedMessage.Subject;
+                
+                return View(mappedTask);
             }
 
             return View();
@@ -32,7 +37,7 @@ namespace TasksManagementMVCApp.Controllers
 
 
         [HttpPost]
-        public ActionResult CreateEdit(Task task)
+        public ActionResult CreateEdit(TaskVM task)
         {
             var context = new FeedbackContext();
             if (ModelState.IsValid)
@@ -43,7 +48,7 @@ namespace TasksManagementMVCApp.Controllers
                     //Updating Task
                     editTask.Title = task.Title;
                     editTask.Description = task.Description;
-                    editTask.Category = task.Category;
+                    editTask.CategoryId = task.CategoryId;
                     editTask.AssignedToId = task.AssignedToId;
                     editTask.DueDate = task.DueDate;
                     editTask.AssociatedMessageId = task.AssociatedMessageId;
@@ -53,9 +58,9 @@ namespace TasksManagementMVCApp.Controllers
                 }
                 else
                 {
-                    //New Task
-                    context.Tasks.Add(task);
-                    task.Created = DateTime.Now;
+                    var newTask = Mapper.Map<Task>(task);
+                    newTask.Created = DateTime.Now;
+                    context.Tasks.Add(newTask);
                 }
                 context.SaveChanges();
                 return RedirectToAction("ViewAll");
@@ -65,6 +70,7 @@ namespace TasksManagementMVCApp.Controllers
                     x => new SelectListItem() { Text = x.Name, Value = x.Id.ToString() }).ToList();
             return View(task);
         }
+
 
         public ActionResult MessageSuggestions(string term)
         {
