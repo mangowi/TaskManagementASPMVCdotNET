@@ -4,11 +4,12 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TasksManagementMVCApp.Helpers;
 
 namespace TasksManagementMVCApp.Models
 {
     [Bind(Exclude = "AssignedTo, AssociatedMessage, Category")]
-    public class Task
+    public class Task :IValidatableObject
     {
         public int Id { get; set; }
         [Required]
@@ -16,6 +17,7 @@ namespace TasksManagementMVCApp.Models
         [Required]
         public string Description { get; set; }
         [Required]
+        [DueDate(ErrorMessage = "Date must be in the future")]
         public DateTime? DueDate { get; set; }
         [Required]
         public int AssignedToId { get; set; }
@@ -33,5 +35,15 @@ namespace TasksManagementMVCApp.Models
         public virtual Admin AssignedTo { get; set; }
         public virtual Message AssociatedMessage { get; set; }
         public virtual Category Category { get; set; }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            var errors = new List<ValidationResult>();
+            if (Completed && string.IsNullOrWhiteSpace(Notes))
+            {
+                errors.Add(new ValidationResult("Notes are required wheen completing a task"));
+            }
+            return errors;
+        }
     }
 }

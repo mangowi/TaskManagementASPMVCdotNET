@@ -9,6 +9,7 @@
 </div>
 <div class="row">
     <div class="col-md-12">
+        @Html.ValidationSummary()
         @using (Html.BeginForm("CreateEdit", "Task"))
         {
                 <div class="form-group">
